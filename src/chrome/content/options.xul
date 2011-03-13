@@ -4,6 +4,9 @@
 <dialog id="hidetoolbarsforapptabs" title="Hide Toolbars for App Tabs - Options"
 	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 	
-	<description value="Options"/>
+	<script src="chrome://hidetoolbarsforapptabs/content/main.js" type="text/javascript"/>
+	<description value="Optionsd"/>
+	
+	<button label="test" oncommand="hidetoolbarsforapptabs.init();"/>
 	
 </dialog>
