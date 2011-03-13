@@ -1,0 +1,6 @@
+#manifest for the firefox extension
+
+content			hidetoolbarsforapptabs					chrome/content/
+locale			hidetoolbarsforapptabs	en-US			chrome/locale/en-US/
+
+
