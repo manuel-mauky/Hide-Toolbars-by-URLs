@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<overlay
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	
+	<script type="application/javascript" src="tabcontextOverlay.js"/>
+	
+	<menupopup id="tabContextMenu">
+		
+		<menuitem id="hidetoolbarsforapptabsOverlay" label="Hides Toolbars"
+			insertbefore="context_openTabInWindow"
+			oncommand="hidetoolbarsforapptabs.init();"/>
+	</menupopup>
+	
+	
+	
+</overlay>

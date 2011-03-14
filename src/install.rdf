@@ -8,7 +8,6 @@
         
         <em:name>Hide Toolbars for App Tabs</em:name>
         <em:creator>Manuel Mauky</em:creator>
-        <em:contributor></em:contributor>
         <em:description>hide toolbars like the locationbar for Taps that are pinned as App Tabs.</em:description>
         <em:homepageURL>http://www.lestard.eu/</em:homepageURL>
         <em:optionsURL>chrome://hidetoolbarsforapptabs/content/options.xul</em:optionsURL>

@@ -4,3 +4,5 @@ content			hidetoolbarsforapptabs					chrome/content/
 locale			hidetoolbarsforapptabs	en-US			chrome/locale/en-US/
 
 
+overlay chrome://browser/content/browser.xul chrome://hidetoolbarsforapptabs/content/tabcontextOverlay.xul
+
