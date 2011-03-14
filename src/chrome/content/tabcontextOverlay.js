@@ -39,31 +39,32 @@ var hidetoolbarsforapptabs = function(){
 	
 	var that = this;
 	
-	var aUrl = "https://mail.google.com";
 	
-	var init = function(){
-		
-		alert("hide Tab");
+	var hideTab = function(){
 		
 		
 		
+		var currentPath = gBrowser.currentURI.prePath;
 		
-		//addUrl("https://mail.google.com");
+		
+		
+		
+		
+		
+		addUrl(currentPath);
 		
 	};
 	
-	var addUrl = function(){
+	var addUrl = function(path){
 		
-		let old = that.XULBrowserWindow.hideChromeForLocation;
+		let old = XULBrowserWindow.hideChromeForLocation;
 
-		
-		alert(aUrl);
-//		XULBrowserWindow.hideChromeForLocation = function(aLocation){
-//			if(0 === aLocation.indexOf(aUrl)){
-//				return true;
-//			}
-//			return hideChromeForLocation.call(XULBrowserWindow,aLocation);			
-//		}
+		XULBrowserWindow.hideChromeForLocation = function(aLocation){
+			if(0 === aLocation.indexOf(path)){
+				return true;
+			}
+			return old.call(XULBrowserWindow,aLocation);			
+		}
 			
 			
 	};
@@ -73,7 +74,7 @@ var hidetoolbarsforapptabs = function(){
 	//public methods
 	return{
 		
-		init : init
+		hideTab : hideTab
 		
 		
 	}

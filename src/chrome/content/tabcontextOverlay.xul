@@ -10,7 +10,7 @@
 		
 		<menuitem id="hidetoolbarsforapptabsOverlay" label="Hides Toolbars"
 			insertbefore="context_openTabInWindow"
-			oncommand="hidetoolbarsforapptabs.init();"/>
+			oncommand="hidetoolbarsforapptabs.hideTab();"/>
 	</menupopup>
 	
 	
