@@ -34,48 +34,91 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-//if(!hidetoolbarsforapptabs)
+if("undefined" == typeof(hidetoolbarsforapptabs))
 var hidetoolbarsforapptabs = function(){
 	
-	var that = this;
+	//get a reference to the nsIIOService. This is needed to create nsIURI instances
+	var ioService = Components.classes["@mozilla.org/network/io-service;1"]
+	                                   .getService(Components.interfaces.nsIIOService);
 	
+	
+	
+	var consoleService = Components.classes["@mozilla.org/consoleservice;1"]
+	                                        .getService(Components.interfaces.nsIConsoleService);
+	
+	
+	
+	
+	//an array to store all urls that should be hidden
+	var urlArray = new Array();
 	
 	var hideTab = function(){
 		
 		
-		
+		//first get an nsIURI-instance of the current tab (currentURI)
+		//then get the prePath (see https://developer.mozilla.org/en/nsIURI for more information)
 		var currentPath = gBrowser.currentURI.prePath;
 		
 		
+		//When the path is not in the Array
+		if(urlArray.indexOf(currentPath) == -1){		
+			
+			//add the path to the array
+			urlArray.push(currentPath);
 		
-		
-		
-		
-		addUrl(currentPath);
-		
-	};
-	
-	var addUrl = function(path){
-		
-		let old = XULBrowserWindow.hideChromeForLocation;
-
-		XULBrowserWindow.hideChromeForLocation = function(aLocation){
-			if(0 === aLocation.indexOf(path)){
-				return true;
-			}
-			return old.call(XULBrowserWindow,aLocation);			
+		}else{
+			//when the path is in the array, remove it
+			
+			//get the index of the given path
+			var index = urlArray.indexOf(currentPath);
+			
+			//remove the element at the index
+			urlArray.splice(index, 1);
 		}
-			
-			
+		
+		
 	};
 	
 	
+	
+	
+		
+	//save a reference to the original hideChrome-function
+	var old = XULBrowserWindow.hideChromeForLocation;
+
+	//override the hideChrome-funtion with our logic
+	XULBrowserWindow.hideChromeForLocation = function(aLocation){
+		
+		//first get an nsIURI-instance of the aLocation, then get the prePath
+		var urlPath = ioService.newURI(aLocation,null,null).prePath;
+		
+		//If the given URL is in the urlArray then hide the tab (return true)
+		if(urlArray.indexOf(urlPath) != -1){
+			return true;
+		}
+		
+		
+		//Call the original hideChrome-function 
+		return old.call(XULBrowserWindow,aLocation);					
+	};
+	
+	var test = function(){
+		
+		
+		consoleService.logStringMessage("Array {");
+		urlArray.forEach(function(element,index){
+			consoleService.logStringMessage(index + ". =" +  element);
+		});
+		consoleService.logStringMessage("}");
+
+		
+	};
 	
 	//public methods
 	return{
 		
-		hideTab : hideTab
-		
+		hideTab : hideTab,
+		test : test
 		
 	}
 }();

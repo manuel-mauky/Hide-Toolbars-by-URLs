@@ -8,9 +8,10 @@
 	
 	<menupopup id="tabContextMenu">
 		
-		<menuitem id="hidetoolbarsforapptabsOverlay" label="Hides Toolbars"
+		<menuitem label="hide/show toolbars"
 			insertbefore="context_openTabInWindow"
 			oncommand="hidetoolbarsforapptabs.hideTab();"/>
+
 	</menupopup>
 	
 	
