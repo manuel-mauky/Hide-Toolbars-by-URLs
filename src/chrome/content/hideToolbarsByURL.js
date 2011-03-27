@@ -255,16 +255,16 @@ hideToolbarsByURL.Database = function(){
 	};	
 	
 	/**
-	 * get the full path of the sqlite-file
+	 * get the sqlite-file
 	 * 
-	 * @return {string} the filepath
+	 * @return {nsIFile} the file
 	 */
-	var getFilePath = function(){
+	var getSqliteFile = function(){
 		if(typeof(sqliteFile) == "undefined"){
 			init();
 		}
 		
-		return sqliteFile.path;		
+		return sqliteFile;		
 	};
 	
 	//public methods
@@ -277,6 +277,6 @@ hideToolbarsByURL.Database = function(){
 		
 		getAllUrls : getAllUrls,
 		
-		getFilePath : getFilePath
+		getSqliteFile : getSqliteFile
 	}	
 }();

@@ -98,7 +98,8 @@ hideToolbarsByURL.Overlay = function(){
 	
 	//A blacklist with urls which should not be hidden like "about:*"
 	var blacklist = new Array();
-	blacklist.push("about:");
+	blacklist.push("about:"); 
+	blacklist.push("chrome:"); // no Chrome-URLs. This would probably corrupt other extensions 
 	
 	
 	/**

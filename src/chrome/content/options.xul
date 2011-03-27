@@ -36,7 +36,6 @@
 		</listbox>
 		
 		<button label="&removeButton.label;" oncommand="hideToolbarsByURL.Options.removeUrls();"/>
-
 	</groupbox>
 	
 	

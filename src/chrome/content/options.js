@@ -52,6 +52,10 @@ hideToolbarsByURL.Options = function(){
 	var db = hideToolbarsByURL.Database;
 	
 	
+	//get a reference to the nsIIOService. This is needed to create nsIURI instances
+	var ioService = Components.classes["@mozilla.org/network/io-service;1"]
+	                                   .getService(Components.interfaces.nsIIOService);
+	
 	
 	/**
 	 * set up the listbox with the data from the sqlite-db
@@ -59,13 +63,19 @@ hideToolbarsByURL.Options = function(){
 	 * the listbox is dynamically created with a xul-template
 	 * but the datasources-propertie has to be set at runtime
 	 */
-	var init = function(){		
-		
+	var init = function(){	
 		var list = document.getElementById("hiddentoolbarsList");
 		
-		list.datasources = "file:" + db.getFilePath();
+		//get the sqlite-file (nsIFile)
+		var file = db.getSqliteFile();
 		
-		list.builder.rebuild();		
+		//create nsIURI from sqlitefile
+		var uri = ioService.newFileURI(file);
+				
+		//update the datasources
+		list.datasources = "file:" + uri.path;
+		
+		list.builder.rebuild();	
 	};
 	
 	
@@ -91,9 +101,9 @@ hideToolbarsByURL.Options = function(){
 			db.getAllUrls(hideToolbarsByURL.Overlay.refresh);
 		}
 		
+		//there is a bug on windows. The rebuild only work when you click the button 2 times. Don't know why.
 		list.builder.rebuild();	
-		
-		
+	
 	};
 	
 
