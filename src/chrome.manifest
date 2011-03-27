@@ -1,8 +1,8 @@
 #manifest for the firefox extension
 
-content			hidetoolbarsforapptabs					chrome/content/
-locale			hidetoolbarsforapptabs	en-US			chrome/locale/en-US/
+content			hideToolbarsByURL					chrome/content/
+locale			hideToolbarsByURL	en-US			chrome/locale/en-US/
 
 
-overlay chrome://browser/content/browser.xul chrome://hidetoolbarsforapptabs/content/tabcontextOverlay.xul
+overlay chrome://browser/content/browser.xul chrome://hideToolbarsByURL/content/tabcontextOverlay.xul
 

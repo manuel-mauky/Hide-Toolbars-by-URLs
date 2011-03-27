@@ -11,7 +11,7 @@
  * for the specific language governing rights and limitations under the
  * License.
  *
- * The Original Code is from "Hide Toolbars for App Tabs" Addon.
+ * The Original Code is from "Hide Toolbars by URLs" Addon.
  *
  * The Initial Developer of the Original Code is
  * Manuel Mauky <manuel.mauky@googlemail.com>.
@@ -34,58 +34,51 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-if("undefined" == typeof(hidetoolbarsforapptabs))
-var hidetoolbarsforapptabs = function(){
+Components.utils.import("chrome://hideToolbarsByURL/content/hideToolbarsByURL.js");
+
+/**
+ * Subclass for the Overlay
+ * 
+ * @author Manuel Mauky <manuel.mauky@googlemail.com>
+ */
+hideToolbarsByURL.Overlay = function(){
+
+	
+	
 	
 	//get a reference to the nsIIOService. This is needed to create nsIURI instances
 	var ioService = Components.classes["@mozilla.org/network/io-service;1"]
 	                                   .getService(Components.interfaces.nsIIOService);
 	
+
+	
+	//reference to the logging-method
+	var log = hideToolbarsByURL.log;
+	
+	//reference to the database object
+	var db = hideToolbarsByURL.Database;
 	
 	
-	var consoleService = Components.classes["@mozilla.org/consoleservice;1"]
-	                                        .getService(Components.interfaces.nsIConsoleService);
 	
-	
-	
-	
-	//an array to store all urls that should be hidden
+	/*
+	 * an array to store the urls that should be hidden
+	 * 
+	 * because of performance we use an array to store the urls
+	 * instead of calling the database every time
+	 * 
+	 */
 	var urlArray = new Array();
 	
-	var hideTab = function(){
-		
-		
-		//first get an nsIURI-instance of the current tab (currentURI)
-		//then get the prePath (see https://developer.mozilla.org/en/nsIURI for more information)
-		var currentPath = gBrowser.currentURI.prePath;
-		
-		
-		//When the path is not in the Array
-		if(urlArray.indexOf(currentPath) == -1){		
-			
-			//add the path to the array
-			urlArray.push(currentPath);
-		
-		}else{
-			//when the path is in the array, remove it
-			
-			//get the index of the given path
-			var index = urlArray.indexOf(currentPath);
-			
-			//remove the element at the index
-			urlArray.splice(index, 1);
-		}
-		
-		
-	};
 	
 	
+	/**
+	 * "override" the hideChromeForLocation-function
+	 * @see https://developer.mozilla.org/en/Hiding_browser_chrome
+	 */
 	
-	
-		
 	//save a reference to the original hideChrome-function
 	var old = XULBrowserWindow.hideChromeForLocation;
-
+	
 	//override the hideChrome-funtion with our logic
 	XULBrowserWindow.hideChromeForLocation = function(aLocation){
 		
@@ -97,29 +90,92 @@ var hidetoolbarsforapptabs = function(){
 			return true;
 		}
 		
-		
 		//Call the original hideChrome-function 
 		return old.call(XULBrowserWindow,aLocation);					
 	};
 	
-	var test = function(){
+	
+	
+	//A blacklist with urls which should not be hidden like "about:*"
+	var blacklist = new Array();
+	blacklist.push("about:");
+	
+	
+	/**
+	 * hide the current tab
+	 */
+	var hideTab = function(){		
+		
+		//first get an nsIURI-instance of the current tab (currentURI)
+		//then get the prePath (see https://developer.mozilla.org/en/nsIURI for more information)
+		var currentPath = gBrowser.currentURI.prePath;
+		
+		//verify that the path is not in the blacklist
+		for(var i=0 ; i<blacklist.length ; i++){
+			if(0 === currentPath.indexOf(blacklist[i])){ 
+				return;
+			} 
+		}
+			
 		
 		
-		consoleService.logStringMessage("Array {");
-		urlArray.forEach(function(element,index){
-			consoleService.logStringMessage(index + ". =" +  element);
-		});
-		consoleService.logStringMessage("}");
+		//When the path is not in the Array
+		if(urlArray.indexOf(currentPath) == -1){		
+			
+			//add the path to the array
+			urlArray.push(currentPath);
+			
+			//add to the database
+			db.addNewUrl(currentPath);
+		
+		}else{
+			//when the path is in the array, remove it
+			
+			//get the index of the given path
+			var index = urlArray.indexOf(currentPath);
+			
+			//remove the element at the index
+			urlArray.splice(index, 1);
+			
+			//remove from the database
 
+			db.removeUrls([currentPath]);
+			
+		}
+		
 		
 	};
 	
+	/**
+	 * use as callback method when calling the getAllUrls-function from db
+	 * 
+	 * @param {Array.<string>}
+	 */
+	var refresh = function(aUrlArray){		
+		urlArray = new Array();
+			
+		aUrlArray.forEach(function(element){
+			urlArray.push(element);
+		});
+		
+	};
+	
+	/**
+	 * when loaded the first time, 
+	 * get the values from the database and put them to the array
+	 */
+	var init = function(){
+		db.getAllUrls(refresh);		
+	}(); //call the function when the jsfile is loaded
+
+	
+	
 	//public methods
-	return{
-		
+	return{	
 		hideTab : hideTab,
-		test : test
-		
-	}
+		refresh : refresh,
+		init : init
+	};
+	
 }();
 

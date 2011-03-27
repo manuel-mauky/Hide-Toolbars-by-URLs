@@ -5,7 +5,7 @@ set zip=c:\programme\7-zip\7z.exe
 
 set srcdir=%cd%\src\*
 
-set xpi=%cd%\hidetoolbarsforapptabs.xpi
+set xpi=%cd%\hideToolbarsByURL.xpi
 
 
 

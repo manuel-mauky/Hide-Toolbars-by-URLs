@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
+<!DOCTYPE dialog SYSTEM "chrome://hideToolbarsByURL/locale/hideToolbarsByURL.dtd">
+
 <overlay
 	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 	
-	<script type="application/javascript" src="tabcontextOverlay.js"/>
+	<script src="chrome://hideToolbarsByURL/content/tabcontextOverlay.js" type="application/javascript" />
 	
 	<menupopup id="tabContextMenu">
 		
-		<menuitem label="hide/show toolbars"
+		<menuitem label="&showHideMenuitem.label;"
 			insertbefore="context_openTabInWindow"
-			oncommand="hidetoolbarsforapptabs.hideTab();"/>
+			oncommand="hideToolbarsByURL.Overlay.hideTab();"/>
+		
 
 	</menupopup>
 	

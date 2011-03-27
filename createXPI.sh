@@ -1,10 +1,10 @@
 #!/bin/bash
 
 
-rm -f $PWD/hidetoolbarsforapptabs.xpi
+rm -f $PWD/hideToolbarsByURL.xpi
 
 
 echo source directory: $PWD/src
 
 echo creating xpi
-7z a $PWD/hidetoolbarsforapptabs.xpi -tzip $PWD/src/*
+7z a $PWD/hideToolbarsByURL.xpi -tzip $PWD/src/*

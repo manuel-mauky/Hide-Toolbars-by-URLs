@@ -1,13 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="chrome://global/skin/global.css" type="text/css"?>
 
-<dialog id="hidetoolbarsforapptabs" title="Hide Toolbars for App Tabs - Options"
-	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+<!DOCTYPE dialog SYSTEM "chrome://hideToolbarsByURL/locale/hideToolbarsByURL.dtd">
+
+<dialog id="hidetoolbarsbyurls" title="Hide Toolbars by URLs - Preferences"
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+
+	onload="hideToolbarsByURL.Options.init();"
+	>
+	
+	<script src="chrome://hideToolbarsByURL/content/options.js" type="text/javascript"/>
 	
 	
-	<script src="chrome://hidetoolbarsforapptabs/content/options.js" type="text/javascript"/>
-	<description value="Option"/>
+	<groupbox flex="1">
+		<caption label="&hiddenurls.label;"/>
+		
 	
-	<button label="test" oncommand="hidetoolbarsforapptabs.Options.test();"/>
+		<listbox id="hiddentoolbarsList" 
+				datasources="rdf:null" 
+				ref="*" 
+				querytype="storage" 
+				seltype="multiple"
+				rows="15"
+				width="300px"
+				>
+		  <template>
+		    <query>
+		      select url from hiddenurls
+		    </query>
+		    <action>
+		      <listitem uri="?" label="?url"/>
+		    </action>
+		  </template>
+		</listbox>
+		
+		<button label="&removeButton.label;" oncommand="hideToolbarsByURL.Options.removeUrls();"/>
+
+	</groupbox>
+	
+	
+	
 	
 </dialog>
