@@ -1,3 +1,3 @@
 <!ENTITY hiddenurls.label "Hidden URLs:">
 <!ENTITY removeButton.label "Remove selected URL(s)">
-<!ENTITY showHideMenuitem.label "Hide/Show Toolbars">
+<!ENTITY hideMenuitem.label "Hide/Unhide Toolbars">

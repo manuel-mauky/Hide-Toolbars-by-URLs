@@ -10,7 +10,7 @@
 	
 	<menupopup id="tabContextMenu">
 		
-		<menuitem label="&showHideMenuitem.label;"
+		<menuitem label="&hideMenuitem.label;"
 			insertbefore="context_openTabInWindow"
 			oncommand="hideToolbarsByURL.Overlay.hideTab();"/>
 		

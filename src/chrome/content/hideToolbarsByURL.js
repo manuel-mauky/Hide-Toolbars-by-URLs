@@ -11,7 +11,7 @@
  * for the specific language governing rights and limitations under the
  * License.
  *
- * The Original Code is from "Hide Toolbars by URLs" Addon.
+ * The Original Code is from "Hide Toolbars by URL" Addon.
  *
  * The Initial Developer of the Original Code is
  * Manuel Mauky <manuel.mauky@googlemail.com>.

@@ -1,4 +1,4 @@
-#manifest for the firefox extension
+
 
 content			hideToolbarsByURL					chrome/content/
 locale			hideToolbarsByURL	en-US			chrome/locale/en-US/

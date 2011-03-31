@@ -4,7 +4,7 @@
 
 <!DOCTYPE dialog SYSTEM "chrome://hideToolbarsByURL/locale/hideToolbarsByURL.dtd">
 
-<dialog id="hidetoolbarsbyurls" title="Hide Toolbars by URLs - Preferences"
+<dialog id="hidetoolbarsbyurls" title="Hide Toolbars by URL - Options"
 	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 
 	onload="hideToolbarsByURL.Options.init();"
